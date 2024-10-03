@@ -1,7 +1,13 @@
 import Link from 'next/link'
 import { Home, Search, QrCode, User } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 export default function BottomNav() {
+  const { isLoggedIn } = useAuth()
+  
+  if (!isLoggedIn) {
+    return null
+  }
   return (
     <nav className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
       <div className="flex justify-around">

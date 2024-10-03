@@ -85,7 +85,7 @@ export default function JoinQueuePage() {
 
       const data = await response.json()
 
-      router.push(`/queue-status?id=${id}`)
+      router.push(`/queue-status?rut=${formData.usr_id}`)
     } catch (error) {
       console.error('Error joining queue:', error)
 

@@ -11,19 +11,20 @@ export default function QueueStatusPage() {
   const [restaurantName, setRestaurantName] = useState('')
 
   useEffect(() => {
-    const id = searchParams.get('id')
-    if (id) {
-      fetchQueueStatus(id)
-      fetchRestaurantInfo(id)
+    console.log(searchParams);
+    const rut = searchParams.get('rut')
+    if (rut) {
+      fetchQueueStatus(rut)
+      fetchRestaurantInfo(rut)
     }
   }, [searchParams])
 
-  const fetchQueueStatus = async (id: string) => {
+  const fetchQueueStatus = async (rut: string) => {
     // TODO: Replace with actual API call
     try {
-      const response = await fetch(`/api/queue-status/${id}`)
+      const response = await fetch(`https://backdev.tupuesto.cl/usuario/puesto/${rut}`)
       const data = await response.json()
-      setQueueStatus({ position: data.position, waitTime: data.waitTime })
+      setQueueStatus({ position: data.data[0].cola_numero, waitTime: data.data[0].cola_numero * 3 })
     } catch (error) {
       console.error('Error fetching queue status:', error)
     }
@@ -51,19 +52,20 @@ export default function QueueStatusPage() {
     <div className="container mx-auto p-4">
       <Card className="w-full max-w-md mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Your Queue Status</CardTitle>
+          <CardTitle className="text-2xl font-bold">Información de atención</CardTitle>
           {restaurantName && (
             <p className="text-muted-foreground">at {restaurantName}</p>
           )}
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-center text-lg">
-            Your current position in the queue: <strong>{queueStatus.position}</strong>
+            Tu posición en la fila es: <strong>{queueStatus.position}</strong>
           </p>
           <p className="text-center text-lg">
-            Estimated wait time: <strong>{queueStatus.waitTime} minutes</strong>
+            Tiempo de espera estimado: <strong>{queueStatus.waitTime} minutos</strong>
           </p>
-          <Button className="w-full" onClick={refreshStatus}>Refresh Status</Button>
+          <Button className="w-full" onClick={refreshStatus}>Refrescar</Button>
+          <Button className="w-full" onClick={refreshStatus}>Abandonar</Button>
         </CardContent>
       </Card>
     </div>
