@@ -13,9 +13,9 @@ export default function BottomNav() {
           <Search className="h-6 w-6" />
           <span className="text-xs mt-1">Buscar</span>
         </Link>
-        <Link href="/scan" className="flex flex-col items-center p-2">
+        <Link href="/generateQR" className="flex flex-col items-center p-2">
           <QrCode className="h-6 w-6" />
-          <span className="text-xs mt-1">Escanear</span>
+          <span className="text-xs mt-1">Generar QR</span>
         </Link>
         <Link href="/profile" className="flex flex-col items-center p-2">
           <User className="h-6 w-6" />
