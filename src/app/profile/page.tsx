@@ -6,10 +6,13 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Switch } from '@/components/ui/switch'
 import { Bell, ChevronRight, LogOut, Settings, User } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
+import router from 'next/router'
+
 
 export default function ProfilePage() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
-
+  const { logout } = useAuth()
   return (
     <div className="space-y-6">
       <Card>
@@ -65,10 +68,10 @@ export default function ProfilePage() {
             </span>
             <ChevronRight className="h-5 w-5" />
           </Button>
-          <Button variant="outline" className="w-full justify-between text-red-600 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900">
+          <Button onClick={()=> { logout(), router.replace('/')}} variant="outline" className="w-full justify-between text-red-600 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900">
             <span className="flex items-center space-x-2">
               <LogOut className="h-5 w-5" />
-              <span>Log Out</span>
+              <span>Cerrar Sesión</span>
             </span>
             <ChevronRight className="h-5 w-5" />
           </Button>

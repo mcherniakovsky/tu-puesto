@@ -137,25 +137,25 @@ export default function JoinQueuePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="usr_nombre">Name</Label>
+              <Label htmlFor="usr_nombre">Nombre</Label>
               <Input
                 id="usr_nombre"
                 name="usr_nombre"
                 value={formData.usr_nombre}
                 onChange={handleInputChange}
-                placeholder="Enter your full name"
+                placeholder="Ingresa tu nombre"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="correo">Email</Label>
+              <Label htmlFor="correo">Correo</Label>
               <Input
                 id="correo"
                 name="correo"
                 type="email"
                 value={formData.correo}
                 onChange={handleInputChange}
-                placeholder="your.email@example.com"
+                placeholder="tu.correo@ejemplo.com"
                 required
               />
             </div>

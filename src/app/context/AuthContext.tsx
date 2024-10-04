@@ -1,36 +1,49 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
+import router from 'next/router'
 
 type AuthContextType = {
   isLoggedIn: boolean
-  login: () => void
+  login: (token: string) => void
   logout: () => void
+  checkAuth: () => boolean
+  token: string | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
-    // Check if user is logged in (e.g., by checking local storage)
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
-    setIsLoggedIn(loggedIn)
+    const storedToken = Cookies.get('authToken')
+    if (storedToken) {
+      setIsLoggedIn(true)
+      setToken(storedToken)
+    }
   }, [])
 
-  const login = () => {
+  const login = (newToken: string) => {
     setIsLoggedIn(true)
-    localStorage.setItem('isLoggedIn', 'true')
+    setToken(newToken)
+    Cookies.set('authToken', newToken, { sameSite: 'strict' })
   }
 
   const logout = () => {
     setIsLoggedIn(false)
-    localStorage.removeItem('isLoggedIn')
+    setToken(null)
+    Cookies.remove('authToken')
+  }
+
+  const checkAuth = () => {
+    return !!Cookies.get('authToken')
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, checkAuth, token }}>
       {children}
     </AuthContext.Provider>
   )
