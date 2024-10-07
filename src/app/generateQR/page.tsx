@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Copy, Download } from 'lucide-react'
 
-export default function GenerateQRPage({ restaurantId }: { restaurantId: string }) {
+export default function GenerateQRPage({ restaurantId }: any) {
   const [queueUrl, setQueueUrl] = useState('')
 
 
@@ -29,7 +29,12 @@ export default function GenerateQRPage({ restaurantId }: { restaurantId: string 
   }
 
   const downloadQRCode = () => {
+
     const svg = document.getElementById('qr-code')
+    if (!svg) {
+      console.error('SVG element not found');
+      return;
+    }
     const svgData = new XMLSerializer().serializeToString(svg)
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -37,7 +42,11 @@ export default function GenerateQRPage({ restaurantId }: { restaurantId: string 
     img.onload = () => {
       canvas.width = img.width
       canvas.height = img.height
-      ctx.drawImage(img, 0, 0)
+      if (ctx) {
+        ctx.drawImage(img, 0, 0)
+      } else {
+        console.error('Failed to get 2D context');
+      }
       const pngFile = canvas.toDataURL('image/png')
       const downloadLink = document.createElement('a')
       downloadLink.download = `restaurant-1-qr.png`
