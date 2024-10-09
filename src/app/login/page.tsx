@@ -16,6 +16,7 @@ export default function LoginPage() {
   const { login } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
+  let redirectPath: string | null = null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,8 +28,11 @@ export default function LoginPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Basic ${base64Credentials}`
-        },
+          'Authorization': `Basic ${base64Credentials}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': 'Content-Type Authorization'
+        }
       })
 
       if (!response.ok) {
@@ -38,13 +42,14 @@ export default function LoginPage() {
       const {data} = await response.json()
       if (data.token) {
         login(data.token) // Pass the token to the login function 
-        router.replace('/')
+       window.location.href = "/"
       } else {
         throw new Error('Invalid credentials')
       }
     } catch (error) {
       console.error('Login error:', error)
     } finally {
+
       setIsLoading(false)
     }
   }
@@ -58,7 +63,7 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="Username">Username</Label>
+              <Label htmlFor="Username">Usuario</Label>
               <Input
                 id="Username"
                 type="text"
@@ -68,7 +73,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="Password">Password</Label>
+              <Label htmlFor="Password">Contraseña</Label>
               <Input
                 id="Password"
                 type="password"
@@ -81,7 +86,7 @@ export default function LoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
+                  Iniciando sesión...
                 </>
               ) : (
                 'Log In'
