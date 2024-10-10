@@ -45,14 +45,6 @@ export default function ManagerDashboardPage() {
     ],
   }
 
-  const topDishes = [
-    { name: 'Spaghetti Carbonara', orders: 42 },
-    { name: 'Margherita Pizza', orders: 38 },
-    { name: 'Grilled Salmon', orders: 31 },
-    { name: 'Caesar Salad', orders: 28 },
-    { name: 'Tiramisu', orders: 25 },
-  ]
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -72,7 +64,7 @@ export default function ManagerDashboardPage() {
             <Users className="h-8 w-8 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{generateRandomData(1, 500)[0]}</div>
+            <div className="text-2xl font-bold">{generateRandomData(1, 200)[0]}</div>
           </CardContent>
         </Card>
         <Card>
@@ -81,7 +73,7 @@ export default function ManagerDashboardPage() {
             <Clock className="h-8 w-8 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{generateRandomData(1, 30)[0]} min</div>
+            <div className="text-2xl font-bold">{generateRandomData(1, 20)[0]} min</div>
           </CardContent>
         </Card>
         <Card>
@@ -90,7 +82,7 @@ export default function ManagerDashboardPage() {
             <Utensils className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{generateRandomData(1, 1000)[0]}</div>
+            <div className="text-2xl font-bold">{generateRandomData(1, 100)[0]}</div>
           </CardContent>
         </Card>
       </div>
