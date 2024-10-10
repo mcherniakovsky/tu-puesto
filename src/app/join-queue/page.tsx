@@ -118,7 +118,7 @@ export default function JoinQueuePage() {
     <div className="container mx-auto p-4">
       <Card className="w-full max-w-md mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Join the Queue</CardTitle>
+          <CardTitle className="text-2xl font-bold">Toma tu puesto</CardTitle>
           {restaurantInfo.nombre && (
             <p className="text-muted-foreground">for {restaurantInfo.nombre}</p>
           )}
@@ -163,10 +163,10 @@ export default function JoinQueuePage() {
               {isJoining ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Joining Queue...
+                  Uniendose...
                 </>
               ) : (
-                'Join Queue'
+                'Tomar puesto'
               )}
             </Button>
           </form>

@@ -1,34 +1,54 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { redirect, useSearchParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Loader2, Users, Clock, Utensils, DollarSign } from 'lucide-react'
 
 export default function QueueStatusPage() {
   const searchParams = useSearchParams()
-  const [queueStatus, setQueueStatus] = useState({ position: 0, waitTime: 0 })
+  const [queueStatus, setQueueStatus] = useState({ position: 0, waitTime: 0, colaID: 1 })
   const [restaurantName, setRestaurantName] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     console.log(searchParams);
     const rut = searchParams.get('rut')
     if (rut) {
       fetchQueueStatus(rut)
+      setTimeout(() => setIsLoading(false), 1000)
       fetchRestaurantInfo(rut)
     }
   }, [searchParams])
 
   const fetchQueueStatus = async (rut: string) => {
+    setIsLoading(true)
     // TODO: Replace with actual API call
     try {
       const response = await fetch(`https://backdev.tupuesto.cl/usuario/puesto/${rut}`)
       const data = await response.json()
-      setQueueStatus({ position: data.data[0].cola_numero, waitTime: data.data[0].cola_numero * 3 })
+      setQueueStatus({ position: data.data[0].cola_numero, waitTime: data.data[0].cola_numero * 3, colaID: data.data[0].cola_id })
+      setIsLoading(false)
     } catch (error) {
       console.error('Error fetching queue status:', error)
     }
   }
+
+  const handleDecline = async (id: string) => {
+    try {
+      const response = await fetch(`https://backdev.tupuesto.cl/cola/baja/${id}`, {
+        method: 'PUT',
+      })
+      if (!response.ok) {
+        throw new Error('Failed to decline queue entry')
+      }
+      setIsLoading(false)
+      window.location.href = "/join-queue?id=1";
+    } catch (err) {
+    }
+  }
+
 
   const fetchRestaurantInfo = async (id: string) => {
     // TODO: Replace with actual API call
@@ -42,10 +62,18 @@ export default function QueueStatusPage() {
   }
 
   const refreshStatus = () => {
-    const id = searchParams.get('id')
-    if (id) {
-      fetchQueueStatus(id)
+    const rut = searchParams.get('rut')
+    if (rut) {
+      fetchQueueStatus(rut)
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    )
   }
 
   return (
@@ -65,7 +93,7 @@ export default function QueueStatusPage() {
             Tiempo de espera estimado: <strong>{queueStatus.waitTime} minutos</strong>
           </p>
           <Button className="w-full" onClick={refreshStatus}>Refrescar</Button>
-          <Button className="w-full" onClick={refreshStatus}>Abandonar</Button>
+          <Button className="w-full" onClick={() => handleDecline(queueStatus.colaID)}>Abandonar</Button>
         </CardContent>
       </Card>
     </div>
