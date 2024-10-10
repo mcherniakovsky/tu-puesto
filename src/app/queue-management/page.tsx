@@ -49,7 +49,7 @@ export default function QueueManagementPage() {
   const handleDecline = async (id: string) => {
     try {
       const response = await fetch(`https://backdev.tupuesto.cl/cola/baja/${id}`, {
-        method: 'POST',
+        method: 'PUT',
       })
       if (!response.ok) {
         throw new Error('Failed to decline queue entry')
@@ -107,7 +107,7 @@ export default function QueueManagementPage() {
                     <div className="flex space-x-2">
                       <Button
                         size="sm"
-                        onClick={() => handleAccept(entry.cola_id)}
+                        onClick={() => handleDecline(entry.cola_id)}
                         className="bg-green-500 hover:bg-green-600"
                       >
                         <CheckCircle className="h-4 w-4 mr-1" />

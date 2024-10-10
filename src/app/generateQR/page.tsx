@@ -16,7 +16,7 @@ export default function GenerateQRPage({ restaurantId }: any) {
   }, [restaurantId])
 
   const generateQueueUrl = () => {
-    const url = `${window.location.origin}/join-queue/1`
+    const url = `${window.location.origin}/join-queue?id=1`
     setQueueUrl(url)
   }
 

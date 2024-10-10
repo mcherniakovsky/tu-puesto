@@ -105,9 +105,9 @@ export default function ManagerDashboardPage() {
           </CardContent>
         </Card>
       </div>
-      <div className="flex justify-end">
+{/*       <div className="flex justify-end">
         <Button>Generar Reporte</Button>
-      </div>
+      </div> */}
     </div>
   )
 }
