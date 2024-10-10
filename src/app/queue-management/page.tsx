@@ -93,7 +93,7 @@ export default function QueueManagementPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Posición</TableHead>
+                <TableHead>N°</TableHead>
                 <TableHead>Nombre</TableHead>
                 <TableHead>Acciones</TableHead>
               </TableRow>

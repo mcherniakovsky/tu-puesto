@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Home, Search, QrCode, User } from 'lucide-react'
+import { Home, Search, QrCode, User, ListEnd } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 export default function BottomNav() {
@@ -28,9 +28,9 @@ export default function BottomNav() {
           <Home className="h-6 w-6" />
           <span className="text-xs mt-1">Inicio</span>
         </Link>
-        <Link href="/restaurants" className="flex flex-col items-center p-2">
-          <Search className="h-6 w-6" />
-          <span className="text-xs mt-1">Encontrar</span>
+        <Link href="/queue-management" className="flex flex-col items-center p-2">
+          <ListEnd className="h-6 w-6" />
+          <span className="text-xs mt-1">Cola</span>
         </Link>
         <Link href="/generateQR" className="flex flex-col items-center p-2">
           <QrCode className="h-6 w-6" />
