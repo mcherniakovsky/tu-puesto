@@ -22,7 +22,7 @@ export default function GenerateQRPage({ restaurantId }: any) {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(queueUrl).then(() => {
-      alert('URL copied to clipboard!')
+      alert('URL copiada en el portapaleles!')
     }).catch(err => {
       console.error('Failed to copy: ', err)
     })
